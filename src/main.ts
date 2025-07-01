@@ -28,6 +28,25 @@ function isActress(dati: unknown): dati is Actress{ //is Actress mi deve ritorna
   )
 }
 
+async function getActress(id: number): Promise<Actress | null>{
+  try{
+    const response = await fetch(`http://localhost:3333/actresses/${id}`);
+    const dati: unknown = await response.json();
+    if(!isActress(dati)){
+      throw new Error('Dati non validi');
+    }
+    return dati;
+  } catch(error){
+    if(error instanceof Error){
+      console.error('Errore durante il recupero dei dati:', error)
+    } else{
+      console.error('Errore sconosciuto', error)
+    }
+    return null;
+  }
+
+}
+
 /*📌 Milestone 4
 Crea una funzione getAllActresses che chiama:
 
