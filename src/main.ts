@@ -1,5 +1,6 @@
 import type { Actress } from "./types";
 
+
 // Type guard per verificare se un oggetto è di tipo Actress
 function isActress(dati: unknown): dati is Actress{ //is Actress mi deve ritornare un booleano che mi dice se è actress oppure no
   return(
