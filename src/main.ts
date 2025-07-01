@@ -1,12 +1,3 @@
-/*
-📌 Milestone 3
-Crea una funzione getActress che, dato un id, effettua una chiamata a:
-
-GET /actresses/:id
-La funzione deve restituire l’oggetto Actress, se esiste, oppure null se non trovato.
-
-Utilizza un type guard chiamato isActress per assicurarti che la struttura del dato ricevuto sia corretta.
-*/
 import type { Actress } from "./types";
 
 // Type guard per verificare se un oggetto è di tipo Actress
@@ -45,6 +36,25 @@ async function getActress(id: number): Promise<Actress | null>{
     return null;
   }
 
+}
+
+async function getAllActresses(): Promise<Actress[]>{
+  try{
+    const response = await fetch('http://localhost:3333/actresses');
+    const dati: unknown = await response.json();
+    if(!(dati instanceof Array)){
+      throw new Error('Formato dei dati non validi: non è un array');
+    }
+    const attriciTrovate: Actress[] = dati.filter(isActress);
+    return attriciTrovate;
+  } catch(error){
+    if(error instanceof Error){
+      console.error('Errore durante il recupero dei dati:', error)
+    } else{
+      console.error('Errore sconosciuto', error)
+    }
+    return [];
+  }
 }
 
 /*📌 Milestone 4
