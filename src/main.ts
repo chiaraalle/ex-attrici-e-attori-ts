@@ -6,9 +6,29 @@ GET /actresses/:id
 La funzione deve restituire l’oggetto Actress, se esiste, oppure null se non trovato.
 
 Utilizza un type guard chiamato isActress per assicurarti che la struttura del dato ricevuto sia corretta.
+*/
+import type { Actress } from "./types";
 
+// Type guard per verificare se un oggetto è di tipo Actress
+function isActress(dati: unknown): dati is Actress{ //is Actress mi deve ritornare un booleano che mi dice se è actress oppure no
+  return(
+    typeof dati === "object" && dati !== null &&
+    "id" in dati && typeof dati.id === "number" && //proprietà id
+    "name" in dati && typeof dati.name === "string" && //proprietà nome
+    "birth_year" in dati && typeof dati.birth_year === "number" && //proprietà annoDiNascita
+    "death_year" in dati && typeof dati.birth_year === "number" && //proprietà annoDiMorte
+    "biography" in dati && typeof dati.biography === "string" && //proprietà biografia
+    "image" in dati && typeof dati.image === "string" && //proprietà immagine
+    "most_famous_movies" in dati && dati.most_famous_movies instanceof Array && //proprietà filmPiuFamosi
+    dati.most_famous_movies.length === 3 && 
+    dati.most_famous_movies.every(movie => typeof movie === "string") &&
+    "awards" in dati && typeof dati.awards === "string" && //proprietà premi
+    "nationality" in dati && typeof dati.nationality === "string" //proprietà nazionalità
 
-📌 Milestone 4
+  )
+}
+
+/*📌 Milestone 4
 Crea una funzione getAllActresses che chiama:
 
 GET /actresses
